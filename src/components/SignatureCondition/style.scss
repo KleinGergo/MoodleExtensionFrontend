@@ -1,0 +1,49 @@
+.cards__text{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.headers{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.icon-container {
+    position: relative;
+    display: inline-block;
+   
+  }
+.cards__container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 1120px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+.text {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+  .icon-container:hover .text {
+    opacity: 1;
+    visibility: visible;
+    
+  }
+  .icon{
+    cursor: pointer;
+  }
+.condition{
+  text-align: left;
+}

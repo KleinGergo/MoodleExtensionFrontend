@@ -1,0 +1,47 @@
+.cards__email__text{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.cards__item__text{
+    padding-top: 0;
+    margin-top: 0; 
+}
+.cards__container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 1120px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .cards__item__link {
+    display: block;
+    flex-flow: column;
+    width: 80%;
+    box-shadow: 0 0px 15px rgba(43,133,245, 1);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+  }.cards {
+    padding: 4rem;
+  }
+  /* CSS to ensure consistent alignment */
+/* CSS to ensure consistent alignment */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 20%; /* Set a consistent width for all input fields */
+}
