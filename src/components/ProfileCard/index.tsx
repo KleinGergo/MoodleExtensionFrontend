@@ -5,6 +5,7 @@ import CryptoJS from 'crypto-js';
 
 interface CardItemProps {
     text: string;
+    logout: ()=> void;
   }
   
   const CardItem: React.FC<CardItemProps> = (props) => {
@@ -74,6 +75,8 @@ interface CardItemProps {
 
           <br/><br/>
           <button onClick={() => changePassword(props.text, oldPassword, newPassword, confirmPassword)}>Jelszó csere</button>
+          <br/><br/>
+          <button onClick={props.logout}>Kijelentkezés</button>
           </div>
          </div>
         </div>

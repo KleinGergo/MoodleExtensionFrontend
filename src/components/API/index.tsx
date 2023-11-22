@@ -22,6 +22,22 @@ const API = {
     }
   },
   // Add more API functions here as needed
+  addOfferedGradeCondition: async(subjectIdentifier: string, signatureCondition: string) =>{
+    try{
+      const response = await fetch(
+        `${API_BASE_URL}/MoodleApi/addOfferedGradeCondition?subjectIdentifier=${subjectIdentifier}&signatureCondition=${signatureCondition}`,
+        {
+          method: 'PUT'
+        });
+      if (!response.ok){
+        throw new Error('API request failed');
+      }
+
+    }catch(error){
+      console.error('Error in addOfferedGradeCondition:',error);
+      throw error;
+    }
+  },
   addSignatureCondition: async(subjectIdentifier: string, signatureCondition: string) =>{
     try{
       const response = await fetch(
@@ -38,6 +54,7 @@ const API = {
       throw error;
     }
   },
+  
   getTestResultsForCourse: async (subjectIdentifier: string) => {
     try {
       const response = await fetch(
@@ -56,6 +73,27 @@ const API = {
       console.error('Error in getTestResultsForCourse:', error);
       // Handle the error or log it, and return null or an appropriate value
       return null;
+    }
+  },
+
+  getStatisticForCourse: async (subjectIdentifier: string)=>{
+    try{
+      console.log(`${API_BASE_URL}/MoodleAPI/getStatistics?subjectIdentifier=${subjectIdentifier}`);
+      const response = await fetch(
+        `${API_BASE_URL}/MoodleAPI/getStatistics?subjectIdentifier=${subjectIdentifier}`,
+        {
+          method: 'GET'
+        });
+  
+      if (!response.ok) {
+        throw new Error('API request failed');
+      } else {
+        const data = await response.json();
+        return data; // Return the data
+      }
+
+    }catch(error){
+      console.error('Error in getStatisticForCourse:', error);
     }
   }
   

@@ -5,6 +5,7 @@ interface CardItemProps {
     path: string;
     src: string;
     text: string;
+    value: number;
   }
   const CardItem: React.FC<CardItemProps> = (props) => {
   return (
@@ -18,7 +19,7 @@ interface CardItemProps {
             />
           </figure>
           <div className='cards__item__info'>
-            <h5 className='cards__item__text'>{props.text}</h5>
+            <h5 className='cards__item__text'>{props.text} {props.value}</h5>
           </div>
         </div>
       </li>

@@ -14,6 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ email }) => {
     width: 0,
     height: 0,
   });
+
   useEffect(() => {
     const handleResize = () => {
       setSize({
@@ -33,8 +34,9 @@ const Navbar: React.FC<NavbarProps> = ({ email }) => {
   }, [size.width, menuOpen]);
 
   const menuToggleHandler = () => {
-    setMenuOpen((p) => !p);
+    setMenuOpen((prev) => !prev);
   };
+
 
   return (
     <header className="header">
@@ -58,9 +60,11 @@ const Navbar: React.FC<NavbarProps> = ({ email }) => {
               <Link to="/SignatureCondition">Aláírás feltétel</Link>
             </li>
             <li>
+              <Link to ="/OfferedGrade">Megajánlott jegy feltétel</Link>
+            </li>
+            <li>
               <Link to="/Profile">{email.toUpperCase()}</Link>
             </li>
-            
           </ul>
         </nav>
         <div className="header__content__toggle">

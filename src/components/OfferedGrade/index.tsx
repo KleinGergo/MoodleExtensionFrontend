@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from "../Navbar";
 import {Condition} from "../Models/Condition"
-import { SignatureCondition } from '../Models/SignatureCondition';
-import { SignatureConditionWrapper } from '../Models/SignatureConditionWrapper';
+import { OfferedGradeCondition } from '../Models/OfferedGradeCondition';
+import { OfferedGradeConditionWrapper } from '../Models/OfferedGradeConditionWrapper';
 import {FaQuestion, FaRegTimesCircle} from 'react-icons/fa';
 import './style.scss';
 import {API} from '../API';
+import { GradeCondition } from '../Models/GradeCondition';
 {/*FaRegTimesCircle*/}
 interface Props {
   email: string;
@@ -13,7 +14,7 @@ interface Props {
 
 type IconId = string;
 
-function CreateSignatureCondition({ email }: Props) {
+function CreateOfferedGradeCondition({ email }: Props) {
   const [subjectIdentifier, setSubjectIdentifier] = useState<string>('');
   const [jsonString, setJsonString] = useState('');
   const [isHovered, setIsHovered] = useState<Record<string, boolean>>({});
@@ -23,9 +24,6 @@ function CreateSignatureCondition({ email }: Props) {
       [iconId]: true,
     }));
   };
-
-  
-  
   
   const handleMouseLeave = (iconId: IconId) => {
     setIsHovered((prevIsHovered) => ({
@@ -33,15 +31,15 @@ function CreateSignatureCondition({ email }: Props) {
       [iconId]: false,
     }));
   };
-  let [signatureConditions, setSignatureConditions] = useState<SignatureCondition>({
+  let [gradeConditions, setOfferedGradeCondition] = useState<OfferedGradeCondition>({
     Type: 'complex', // Provide an initial Type
     Conditions: [], // Initialize an empty array for conditions
   });
-  let [signatureConditionWrapper, setSignatureConditionWrapper] = useState<SignatureConditionWrapper>({
-    SignatureCondition: signatureConditions// Initialize an empty array for conditions
+  let [offeredGradeConditionWrapper, setOfferedGradeWrapper] = useState<OfferedGradeConditionWrapper>({
+    GradeCondition: gradeConditions// Initialize an empty array for conditions
   });
   const [selectedType, setSelectedType] = useState('multipleAssigment');
-  const [condition, setCondition] = useState<Condition>({
+  const [condition, setCondition] = useState<GradeCondition>({
     Type: selectedType,
     NumberOfAssigments: 0,
       RequiredNumberOfAssigments: 0,
@@ -56,15 +54,15 @@ function CreateSignatureCondition({ email }: Props) {
       RequiredNumberOfBigTests: 0,
       NumberOfSmallTests: 0,
       RequiredNumberOfSmallTests: 0,
-      GradeAPercentage: 0,
-      GradeBPercentage: 0,
-      GradeCPercentage: 0,
-      GradeDPercentage: 0,
+      OfferedGradeAPercentage: 0,
+      OfferedGradeBPercentage: 0,
+      OfferedGradeCPercentage: 0,
+      OfferedGradeDPercentage: 0,
   });
   const handleRemove = (index: number)=>{
-    const updatedConditions = [...signatureConditions.Conditions];
+    const updatedConditions = [...gradeConditions.Conditions];
   updatedConditions.splice(index, 1);
-  setSignatureConditions({ ...signatureConditions, Conditions: updatedConditions });
+  setOfferedGradeCondition({ ...gradeConditions, Conditions: updatedConditions });
   }
 
   const toggleFields = (type: string) => {
@@ -84,10 +82,10 @@ function CreateSignatureCondition({ email }: Props) {
         RequiredNumberOfBigTests: 0,
         NumberOfSmallTests: 0,
         RequiredNumberOfSmallTests: 0,
-        GradeAPercentage: 0,
-        GradeBPercentage: 0,
-        GradeCPercentage: 0,
-        GradeDPercentage: 0,
+        OfferedGradeAPercentage: 0,
+        OfferedGradeBPercentage: 0,
+        OfferedGradeCPercentage: 0,
+        OfferedGradeDPercentage: 0,
     });
   };
   
@@ -106,7 +104,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
 
     
     const newCondition = { ...condition };
-    signatureConditions.Conditions.push(newCondition)
+    gradeConditions.Conditions.push(newCondition)
     // Update the conditions by adding the new condition to the existing list
     
     
@@ -126,27 +124,28 @@ const handleFieldChange = (fieldName: string, value: any) => {
         RequiredNumberOfBigTests: 0,
         NumberOfSmallTests: 0,
         RequiredNumberOfSmallTests: 0,
-        GradeAPercentage: 0,
-        GradeBPercentage: 0,
-        GradeCPercentage: 0,
-        GradeDPercentage: 0,
+        OfferedGradeAPercentage: 0,
+        OfferedGradeBPercentage: 0,
+        OfferedGradeCPercentage: 0,
+        OfferedGradeDPercentage: 0,
     });
     {/*console.log(JSON.stringify(signatureConditions, (key, value) => {
       if (value !== 0) return value
     }))*/}
-    setJsonString(JSON.stringify(signatureConditions, (key, value) => {
+    setJsonString(JSON.stringify(gradeConditions, (key, value) => {
       if (value !== 0) return value
     }));
   };
-  const generateJSON = () => {
+  const generateJSON  = () => {
     // Assuming signatureConditions is an array or object that you've defined earlier
-    signatureConditionWrapper.SignatureCondition = signatureConditions;
+    offeredGradeConditionWrapper.GradeCondition = gradeConditions;
+    console.log(offeredGradeConditionWrapper);
   
     // Log the JSON string to the console before any modifications
-    console.log(JSON.stringify(signatureConditionWrapper));
+ 
   
     if (subjectIdentifier !== '') {
-      const jsonString = JSON.stringify(signatureConditionWrapper, (key, value) => {
+      const jsonString = JSON.stringify(offeredGradeConditionWrapper, (key, value) => {
         // Check if the value is a numeric string
         if (typeof value === 'string' && !isNaN(parseFloat(value))) {
           return parseFloat(value); // Parse the numeric string to float
@@ -154,12 +153,12 @@ const handleFieldChange = (fieldName: string, value: any) => {
         if(value!==0)
         return value; // Default behavior for other types
       });
-
+    
       // Use the jsonString as needed (e.g., pass it to your API)
-       API.addSignatureCondition(subjectIdentifier, jsonString);
+        API.addOfferedGradeCondition(subjectIdentifier, jsonString);
       
-      signatureConditionWrapper.SignatureCondition.Conditions= [];
-      signatureConditions.Conditions = [];
+      offeredGradeConditionWrapper.GradeCondition.Conditions= [];
+      gradeConditions.Conditions = [];
       setCondition({
         Type: selectedType,
         NumberOfAssigments: 0,
@@ -175,10 +174,10 @@ const handleFieldChange = (fieldName: string, value: any) => {
           RequiredNumberOfBigTests: 0,
           NumberOfSmallTests: 0,
           RequiredNumberOfSmallTests: 0,
-          GradeAPercentage: 0,
-          GradeBPercentage: 0,
-          GradeCPercentage: 0,
-          GradeDPercentage: 0,
+          OfferedGradeAPercentage: 0,
+        OfferedGradeBPercentage: 0,
+        OfferedGradeCPercentage: 0,
+        OfferedGradeDPercentage: 0,
       });
     }else{
       alert('Adja meg a tárgykódot!');
@@ -189,7 +188,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
   return (
     <>
       <Navbar email={email}  />
-      <h1 className='cards__header__text'>Aláírás feltétel létrehozása</h1>
+      <h1 className='cards__header__text'>Megajánlott jegy feltétel létrehozása</h1>
         
             <li className='cards__item'>
         <div className='cards__container'>
@@ -205,7 +204,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
             <option value="multipleAssigment">Beadandó</option>
             <option value="bigTests">NagyZH</option>
             <option value="smallTests">KisZH</option>
-            <option value="grading">Jegykialakítás</option>
+            <option value="offeredGrade">Megajánlot jegykialakítás</option>
           </select>
         </div>
         {selectedType === 'multipleAssigment' && (
@@ -362,43 +361,43 @@ const handleFieldChange = (fieldName: string, value: any) => {
           </div>
           
         )}
-        {selectedType === 'grading' && (
+        {selectedType === 'offeredGrade' && (
           <div id="gradingContainer">
             <h4 className='headers'>Jeles eredmény alsó határa (százalékban): </h4>
             <input
               min="0"
               max="100"
               type="number"
-              value={condition.GradeAPercentage || ''}
-              onChange={(e) => handleFieldChange('GradeAPercentage', e.target.value)}
-              name="GradeAPercentage"
+              value={condition.OfferedGradeAPercentage || ''}
+              onChange={(e) => handleFieldChange('OfferedGradeAPercentage', e.target.value)}
+              name="OfferedGradeAPercentage"
             />
             <h4 className='headers'>Jó eredmény alsó határa (százalékban): </h4>
             <input
               min="0"
-              max={condition.GradeAPercentage || ''}
+              max={condition.OfferedGradeAPercentage || ''}
               type="number"
-              value={condition.GradeBPercentage || ''}
-              onChange={(e) => handleFieldChange('GradeBPercentage', e.target.value)}
-              name="GradeBPercentage"
+              value={condition.OfferedGradeBPercentage || ''}
+              onChange={(e) => handleFieldChange('OfferedGradeBPercentage', e.target.value)}
+              name="OfferedOfferedGradeBPercentage"
             />
             <h4 className='headers'>Közepes eredmény alsó határa (százalékban): </h4>
             <input
             min="0"
-            max={condition.GradeBPercentage || ''}
+            max={condition.OfferedGradeBPercentage || ''}
               type="number"
-              value={condition.GradeCPercentage || ''}
-              onChange={(e) => handleFieldChange('GradeCPercentage', e.target.value)}
-              name="GradeCPercentage"
+              value={condition.OfferedGradeCPercentage || ''}
+              onChange={(e) => handleFieldChange('OfferedGradeCPercentage', e.target.value)}
+              name="OfferedGradeCPercentage"
             />
             <h4 className='headers'>Elégséges eredmény alsó határa (százalékban): </h4>
             <input
             min="0"
-            max={condition.GradeCPercentage || ''}
+            max={condition.OfferedGradeCPercentage || ''}
               type="number"
-              value={condition.GradeDPercentage || ''}
-              onChange={(e) => handleFieldChange('GradeDPercentage', e.target.value)}
-              name="GradeDPercentage"
+              value={condition.OfferedGradeDPercentage || ''}
+              onChange={(e) => handleFieldChange('OfferedGradeDPercentage', e.target.value)}
+              name="OfferedGradeDPercentage"
             />
           </div>
         )}       
@@ -418,7 +417,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
                   <div className='cards__item__info'>
                     <h2 className='cards__email__text'>Eddig megadott feltételek:</h2>
                     <ul>
-              {signatureConditions.Conditions.map((condition: Condition, index: number) => (
+              {gradeConditions.Conditions.map((condition: GradeCondition, index: number) => (
                 <li key={index} className='condition'>
                   
                   {condition.Type === "multipleAssigment" && (
@@ -544,7 +543,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
                     </>
                     
                   )}
-                  {condition.Type === "grading" && (
+                  {condition.Type === "offeredGrade" && (
                     
                     <>
                     Jegykialakítás<FaRegTimesCircle
@@ -554,27 +553,27 @@ const handleFieldChange = (fieldName: string, value: any) => {
 />
                       <div>
                       
-                      {condition.GradeAPercentage && (
+                      {condition.OfferedGradeAPercentage && (
                       <>
-                        Jeles eredmény alsó határa: {condition.GradeAPercentage}<br />
+                        Jeles eredmény alsó határa: {condition.OfferedGradeAPercentage}<br />
                         {/* Add more specific elements for this type */}
                       </>
                     )}
-                      {condition.GradeBPercentage && (
+                      {condition.OfferedGradeBPercentage && (
                       <>
-                        Jó eredmény alsó határa: {condition.GradeBPercentage}%<br />
+                        Jó eredmény alsó határa: {condition.OfferedGradeBPercentage}%<br />
                         {/* Add more specific elements for this type */}
                       </>
                     )}
-                    {condition.GradeCPercentage && (
+                    {condition.OfferedGradeCPercentage && (
                       <>
-                        Közepes eredmény alsó határa: {condition.GradeCPercentage}%<br />
+                        Közepes eredmény alsó határa: {condition.OfferedGradeCPercentage}%<br />
                         {/* Add more specific elements for this type */}
                       </>
                     )}
-                    {condition.GradeDPercentage && (
+                    {condition.OfferedGradeDPercentage && (
                       <>
-                        Elégséges eredmény alsó határa: {condition.GradeDPercentage}%<br />
+                        Elégséges eredmény alsó határa: {condition.OfferedGradeDPercentage}%<br />
                         {/* Add more specific elements for this type */}
                       </>
                     )}
@@ -607,4 +606,4 @@ const handleFieldChange = (fieldName: string, value: any) => {
   );
 }
 
-export default CreateSignatureCondition;
+export default CreateOfferedGradeCondition;

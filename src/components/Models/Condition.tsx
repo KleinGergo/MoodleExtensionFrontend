@@ -18,8 +18,4 @@ export interface Condition {
   GradeBPercentage?: number | null
   GradeCPercentage?: number | null
   GradeDPercentage?: number | null
-  OfferedGradeAPercentage?: number | null
-  OfferedGradeBPercentage?: number | null
-  OfferedGradeCPercentage?: number | null
-  OfferedGradeDPercentage?: number | null
 }

@@ -7,10 +7,7 @@ const CustomTooltip = ({
     payload,
     label,
 }: TooltipProps<ValueType, NameType>) => {
-    console.log('Active:', active);
-    console.log('Payload:', payload);
-    console.log('Label:', label);
-
+    
     if (active) {
         return (
             <div className="custom-tooltip">

@@ -1,78 +1,83 @@
 import Navbar from "../Navbar";
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { API } from '../API';
 import { saveAs } from 'file-saver'; // Use named import for FileSaver
 import * as XLSX from 'xlsx'; // Use named import for XLSX
 import './style.scss'
-
-
-interface DataItem {
-  // Define the properties of your data object
-  property1: string;
-  property2: number;
-  // Add more properties as needed
+import {Test} from '../Models/Test'
+interface Props {
+  email: string;
 }
 
-function Home({ email }: { email: string }) {
+
+
+function Home({ email }: Props) {
   const [courseIdentifier, setCourseIdentifier] = useState('');
-  const fileType ='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    const fileExtension = '.xlsx';
-    const exportToXLSX = async (data: any, filename: string) => {
-      try {
-        const groupedData = data.reduce((result: any, item: any) => {
-          const neptuncode = item.student.neptuncode;
-    
-          if (!result[neptuncode]) {
-            result[neptuncode] = {
-              'Student': { t: 's', v: neptuncode, s: { alignment: { horizontal: 'center' } }}
-            };
+  const exportToXLSX = async (data: any, filename: string) => {
+    try {
+      const transformedData = data.reduce((result: any, item: any) => {
+        const neptuncode = item.neptunCode; // Adjusted field name
+  
+        if (!result[neptuncode]) {
+          result[neptuncode] = {
+            'Neptunkód': { t: 's', v: neptuncode, s: { alignment: { horizontal: 'center' } }},
+          };
+        }
+  
+        item.tests.forEach((test: any, index: number) => { // Adjusted type to any
+          let testColumnName = '';
+          if (test.type === "bigTests") { // Adjusted field name
+            testColumnName = `NagyZH${index + 1} `;
+          } else if (test.type === "smallTests") {
+            testColumnName = `KisZH${index + 1}`;
+          } else if (test.type === "multipleAssigments") {
+            testColumnName = `Beadandó${index + 1}`;
           }
-    
-          const testColumnName = `${item.type || "Nem írt"} eredmény`;
-          const gradeMaxColumnName = `${item.type || "Nem írt"} Max pont`;
-    
-          // Check for null values and replace them with 'Nem írt'
-          const testResult = item.result === null ? 'Nem írt' : item.result;
-    
+  
+          const gradeMaxColumnName = `${testColumnName || "Nem írt"} Max pont`;
+          testColumnName += " eredménye";
+  
+          const testResult = test.result === null ? 'Nem írt' : test.result;
+  
           result[neptuncode][testColumnName] = { t: 's', v: `${testResult}`, s: { alignment: { horizontal: 'center' } }};
-    
-          // Check for null values and replace them with 'Nem írt'
-          const gradeMax = item.gradeMax === null ? 'Nem írt' : item.gradeMax;
-    
+  
+          const gradeMax = test.gradeMax === null ? 'Nem írt' : test.gradeMax;
+  
           result[neptuncode][gradeMaxColumnName] = { t: 'n', v: gradeMax, s: { alignment: { horizontal: 'center' } }};
-    
-          return result;
-        }, {});
-    
-        const transformedData = Object.values(groupedData);
-    
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(transformedData);
-        XLSX.utils.book_append_sheet(wb, ws, 'data');
-    
-        ws['!rows'] = [{ hpt: 15, hpx: 15 }];
-        ws['!cols'] = [{ wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 20 }];
-    
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    
-        const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    
-        saveAs(new Blob([excelBuffer], { type: fileType }), filename + '.xlsx');
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    
-    
-    
-    
-    
-    
+        });
+  
+        // Add the 'SignatureStatus' and 'Grade' columns at the end of the row
+        if (item.signatureStatus === 'approved') {
+          result[neptuncode]['Aláírás'] = { t: 's', v: "Aláírva" };
+        } else {
+          result[neptuncode]['Aláírás'] = { t: 's', v: "Megtagadva"};
+        }
+  
+        result[neptuncode]['Jegy'] = { t: 's', v: item.grade};
+  
+        return result;
+      }, {});
+  
+      const transformedDataArray = Object.values(transformedData);
+  
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(transformedDataArray);
+      XLSX.utils.book_append_sheet(wb, ws, filename);
+  
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  
+      const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  
+      saveAs(new Blob([excelBuffer], { type: fileType }), filename + '.xlsx');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
+  
     
 
-    
-  
   // Make 'email' optional with 'email?'
   async function getTestResultsForCourse(courseIdentifier: string) {
     try {
@@ -80,7 +85,7 @@ function Home({ email }: { email: string }) {
 
       if (result !== null) {
         // Data is available, you can use it here
-        console.log(result);
+        console.log(JSON.stringify(result));
         exportToXLSX(result,courseIdentifier);
 
       } else {
@@ -111,8 +116,7 @@ function Home({ email }: { email: string }) {
           onChange={(e) => setCourseIdentifier(e.target.value)}
         />
       <br></br>
-      <button onClick={() => getTestResultsForCourse(courseIdentifier)}>Teszteredmények lekérése</button>
-           
+      <button onClick={() => getTestResultsForCourse(courseIdentifier)}>Teszteredmények lekérése</button>           
           </div>
          </div>
         </div>

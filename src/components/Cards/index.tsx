@@ -1,8 +1,16 @@
 import './Cards.css';
 import CardItem from '../CardItem';
 import  StatisticCardItem  from "../StatisticCardItem";
+import { FrontendStatistics } from '../Models/FrontendStatistics';
 
-function Cards() {
+interface Props{
+
+}
+
+
+function Cards({reactData}:{reactData ?:FrontendStatistics}) {
+ 
+if(reactData){
   return (
     <div className='cards'>
       <h1 className='cards__header__text'>Általános statisztika</h1>
@@ -10,37 +18,34 @@ function Cards() {
         <div className='cards__wrapper'>
           <ul className='cards__items'>
             <CardItem
-              src='../src/assets/people.png'
+              src='../src/assets/test.png'
               text='Összes teszt száma:'
               path='/'
+              value = {reactData.totalTests}
             />
             <CardItem
-              src='../src/assets/people.png'
+              src='../src/assets/signature.png'
               text='Aláírások száma:'
               path='/'
+              value = {reactData.totalSignatures}
             />
             <CardItem
               src='../src/assets/people.png'
-              text='Teljesítő hallgatók száma:'
+              text='Tárgyat teljesítő hallgatók száma:'
               path='/'
+              value={reactData.totalNumberOfPassedStudents}
             />
           </ul>
           <ul>
-          <StatisticCardItem text='Eredmények' type='bar' width={850} height={800}/>
-            </ul>
-            <br></br>
-            <ul>
-          <StatisticCardItem text='Százalék' type='line'width={850} height={800}/>
-            </ul>
-            <br></br>
-            <ul>
-          <StatisticCardItem text='Százalék' type='pie'width={1000} height={1000}/>
-            </ul>
-
+          <StatisticCardItem reactData={reactData} text='Eredmények' type='bar' />
+          </ul>
+            
         </div>
       </div>
     </div>
   );
+}
+ 
 }
 
 export default Cards;
