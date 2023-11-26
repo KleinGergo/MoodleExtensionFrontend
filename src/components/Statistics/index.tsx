@@ -32,16 +32,18 @@ function Statistic({ email }: { email: string })  {
     
     <>
       <Navbar email={email || ''} />
-      <h4 className='cards__email__text'>Adja meg a tárgykódot:</h4>
+      
+      <div className='cards'>
+        
+        <div className='cards__container'>
+        <h2 className='cards__email__text'>Adja meg a tárgykódot:</h2>
+        <br />
       <input
         type='text'
         value={courseIdentifier}
         onChange={(e) => setCourseIdentifier(e.target.value)}
       />
-      <br />
       <button onClick={() => getStatisticForSubject(courseIdentifier)}>Teszteredmények lekérése</button>
-      <div className='cards'>
-        <div className='cards__container'>
           <div className='cards__wrapper'>
             <ul className='cards__item'>
               <Cards reactData={chartData}/>

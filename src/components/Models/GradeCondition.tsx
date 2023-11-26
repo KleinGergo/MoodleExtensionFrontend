@@ -4,7 +4,6 @@ export interface GradeCondition {
     RequiredNumberOfAssigments?: number | null
     RequiredIndividualAssigmentPercentage?: number | null
     RequiredAvgAssigmentPercentage?: number  | null
-    Weight?: number | null
     NumberOfBigTests?: number | null
     RequiredPRequiredBigTestPercentageercentage?: number | null
     RequiredNumberOfBigTests?: number | null

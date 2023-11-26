@@ -18,4 +18,5 @@ export interface Condition {
   GradeBPercentage?: number | null
   GradeCPercentage?: number | null
   GradeDPercentage?: number | null
+IsCorrectionTestCanWorseTheGrade?: boolean | null
 }

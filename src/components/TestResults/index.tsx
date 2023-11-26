@@ -16,7 +16,7 @@ function Home({ email }: Props) {
   const exportToXLSX = async (data: any, filename: string) => {
     try {
       const transformedData = data.reduce((result: any, item: any) => {
-        const neptuncode = item.neptunCode; // Adjusted field name
+        const neptuncode = item.neptunCode;
   
         if (!result[neptuncode]) {
           result[neptuncode] = {
@@ -24,36 +24,30 @@ function Home({ email }: Props) {
           };
         }
   
-        item.tests.forEach((test: any, index: number) => { // Adjusted type to any
-          let testColumnName = '';
-          if (test.type === "bigTests") { // Adjusted field name
-            testColumnName = `NagyZH${index + 1} `;
-          } else if (test.type === "smallTests") {
-            testColumnName = `KisZH${index + 1}`;
-          } else if (test.type === "multipleAssigments") {
-            testColumnName = `Beadandó${index + 1}`;
-          }
+        item.tests.forEach((test: any, index: number) => {
+          let testColumnName = test.testName;
+          
   
-          const gradeMaxColumnName = `${testColumnName || "Nem írt"} Max pont`;
+          const gradeMaxColumnName = `${testColumnName || ""} Max pont`;
           testColumnName += " eredménye";
   
           const testResult = test.result === null ? 'Nem írt' : test.result;
   
           result[neptuncode][testColumnName] = { t: 's', v: `${testResult}`, s: { alignment: { horizontal: 'center' } }};
   
-          const gradeMax = test.gradeMax === null ? 'Nem írt' : test.gradeMax;
+          const gradeMax = test.gradeMax === null ? '' : test.gradeMax;
   
           result[neptuncode][gradeMaxColumnName] = { t: 'n', v: gradeMax, s: { alignment: { horizontal: 'center' } }};
         });
   
-        // Add the 'SignatureStatus' and 'Grade' columns at the end of the row
         if (item.signatureStatus === 'approved') {
           result[neptuncode]['Aláírás'] = { t: 's', v: "Aláírva" };
         } else {
           result[neptuncode]['Aláírás'] = { t: 's', v: "Megtagadva"};
         }
   
-        result[neptuncode]['Jegy'] = { t: 's', v: item.grade};
+        result[neptuncode]['Jegy'] = { t: 's', v: item.grade };
+        result[neptuncode]['Megajánlott jegy'] = { t: 's', v: item.offeredGrade }; // Added line for offeredGrade
   
         return result;
       }, {});
