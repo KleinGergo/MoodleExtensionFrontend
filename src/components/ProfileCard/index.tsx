@@ -74,7 +74,7 @@ interface CardItemProps {
               />
 
           <br/><br/>
-          <button onClick={() => changePassword(props.text, oldPassword, newPassword, confirmPassword)}>Jelszó csere</button>
+          <button onClick={() => changePassword(props.text, oldPassword, newPassword, confirmPassword)}>Jelszó módosítás</button>
           <br/><br/>
           <button onClick={props.logout}>Kijelentkezés</button>
           </div>

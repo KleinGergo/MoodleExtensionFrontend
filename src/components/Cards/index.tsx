@@ -27,7 +27,7 @@ if(reactData){
               src='../src/assets/signature.png'
               text='Aláírások száma:'
               path='/'
-              value = {reactData.totalSignatures}
+              value = {reactData.totalSignatures}           
             />
             <CardItem
               src='../src/assets/people.png'

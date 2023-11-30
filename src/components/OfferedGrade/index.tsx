@@ -41,18 +41,18 @@ function CreateOfferedGradeCondition({ email }: Props) {
   const [selectedType, setSelectedType] = useState('multipleAssigment');
   const [condition, setCondition] = useState<GradeCondition>({
     Type: selectedType,
-      NumberOfAssigments: null,
-        RequiredNumberOfAssigments: null,
-        RequiredAvgAssigmentPercentage: null,
-        RequiredIndividualAssigmentPercentage: null,
-        RequiredIndividualBigTestPercentage: null,
-        RequiredAvgBigTestPercentage: null,
-        RequiredAvgSmallTestPercentage:null,
-        RequiredIndividualSmallTestPercentage: null,
-        NumberOfBigTests: null,
-        RequiredNumberOfBigTests: null,
-        NumberOfSmallTests: null,
-        RequiredNumberOfSmallTests: null, 
+      NumberOfAssigments: 0,
+        RequiredNumberOfAssigments: 0,
+        RequiredAvgAssigmentPercentage: 0,
+        RequiredIndividualAssigmentPercentage: 0,
+        RequiredIndividualBigTestPercentage: 0,
+        RequiredAvgBigTestPercentage: 0,
+        RequiredAvgSmallTestPercentage:0,
+        RequiredIndividualSmallTestPercentage: 0,
+        NumberOfBigTests: 0,
+        RequiredNumberOfBigTests: 0,
+        NumberOfSmallTests: 0,
+        RequiredNumberOfSmallTests: 0,     
   });
   const handleRemove = (index: number)=>{
     const updatedConditions = [...gradeConditions.Conditions];
@@ -64,18 +64,18 @@ function CreateOfferedGradeCondition({ email }: Props) {
     setSelectedType(type);
     setCondition({
       Type: selectedType,
-      NumberOfAssigments: null,
-        RequiredNumberOfAssigments: null,
-        RequiredAvgAssigmentPercentage: null,
-        RequiredIndividualAssigmentPercentage: null,
-        RequiredIndividualBigTestPercentage: null,
-        RequiredAvgBigTestPercentage: null,
-        RequiredAvgSmallTestPercentage:null,
-        RequiredIndividualSmallTestPercentage: null,
-        NumberOfBigTests: null,
-        RequiredNumberOfBigTests: null,
-        NumberOfSmallTests: null,
-        RequiredNumberOfSmallTests: null, 
+      NumberOfAssigments: 0,
+        RequiredNumberOfAssigments: 0,
+        RequiredAvgAssigmentPercentage: 0,
+        RequiredIndividualAssigmentPercentage: 0,
+        RequiredIndividualBigTestPercentage: 0,
+        RequiredAvgBigTestPercentage: 0,
+        RequiredAvgSmallTestPercentage:0,
+        RequiredIndividualSmallTestPercentage: 0,
+        NumberOfBigTests: 0,
+        RequiredNumberOfBigTests: 0,
+        NumberOfSmallTests: 0,
+        RequiredNumberOfSmallTests: 0,     
     });
   };
   
@@ -101,18 +101,18 @@ const handleFieldChange = (fieldName: string, value: any) => {
     // Reset the form or set the default condition
     setCondition({
       Type: selectedType,
-      NumberOfAssigments: null,
-        RequiredNumberOfAssigments: null,
-        RequiredAvgAssigmentPercentage: null,
-        RequiredIndividualAssigmentPercentage: null,
-        RequiredIndividualBigTestPercentage: null,
-        RequiredAvgBigTestPercentage: null,
-        RequiredAvgSmallTestPercentage:null,
-        RequiredIndividualSmallTestPercentage: null,
-        NumberOfBigTests: null,
-        RequiredNumberOfBigTests: null,
-        NumberOfSmallTests: null,
-        RequiredNumberOfSmallTests: null,     
+      NumberOfAssigments: 0,
+        RequiredNumberOfAssigments: 0,
+        RequiredAvgAssigmentPercentage: 0,
+        RequiredIndividualAssigmentPercentage: 0,
+        RequiredIndividualBigTestPercentage: 0,
+        RequiredAvgBigTestPercentage: 0,
+        RequiredAvgSmallTestPercentage:0,
+        RequiredIndividualSmallTestPercentage: 0,
+        NumberOfBigTests: 0,
+        RequiredNumberOfBigTests: 0,
+        NumberOfSmallTests: 0,
+        RequiredNumberOfSmallTests: 0,     
     });
     {/*console.log(JSON.stringify(signatureConditions, (key, value) => {
       if (value !== 0) return value
@@ -146,18 +146,18 @@ const handleFieldChange = (fieldName: string, value: any) => {
       gradeConditions.Conditions = [];
       setCondition({
         Type: selectedType,
-      NumberOfAssigments: null,
-        RequiredNumberOfAssigments: null,
-        RequiredAvgAssigmentPercentage: null,
-        RequiredIndividualAssigmentPercentage: null,
-        RequiredIndividualBigTestPercentage: null,
-        RequiredAvgBigTestPercentage: null,
-        RequiredAvgSmallTestPercentage:null,
-        RequiredIndividualSmallTestPercentage: null,
-        NumberOfBigTests: null,
-        RequiredNumberOfBigTests: null,
-        NumberOfSmallTests: null,
-        RequiredNumberOfSmallTests: null, 
+      NumberOfAssigments: 0,
+        RequiredNumberOfAssigments: 0,
+        RequiredAvgAssigmentPercentage: 0,
+        RequiredIndividualAssigmentPercentage: 0,
+        RequiredIndividualBigTestPercentage: 0,
+        RequiredAvgBigTestPercentage: 0,
+        RequiredAvgSmallTestPercentage:0,
+        RequiredIndividualSmallTestPercentage: 0,
+        NumberOfBigTests: 0,
+        RequiredNumberOfBigTests: 0,
+        NumberOfSmallTests: 0,
+        RequiredNumberOfSmallTests: 0,     
       });
     }else{
       alert('Adja meg a tárgykódot!');
@@ -365,7 +365,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
               <div className='cards__container'>
                 <div className='cards__item__link'>
                   <div className='cards__item__info'>
-                    <h2 className='cards__email__text'>Eddig megadott feltételek:</h2>
+                    <h2 className='cards__email__text'>Eddigi megadott feltételek:</h2>
                     <ul>
               {gradeConditions.Conditions.map((condition: GradeCondition, index: number) => (
                 <li key={index} className='condition'>
@@ -480,7 +480,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
                   {condition.Type === "offeredGrade" && (
                     
                     <>
-                    Jegykialakítás<FaRegTimesCircle
+                    Megajánlot jegykialakítás:<FaRegTimesCircle
   className='icon'
   color='red'
   onClick={() => handleRemove(index)}
@@ -489,7 +489,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
                       
                       {condition.OfferedGradeAPercentage && (
                       <>
-                        Jeles eredmény alsó határa: {condition.OfferedGradeAPercentage}<br />
+                        Jeles eredmény alsó határa: {condition.OfferedGradeAPercentage}%<br />
                         {/* Add more specific elements for this type */}
                       </>
                     )}
@@ -528,7 +528,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
           <span className='icon'><FaQuestion/></span>
           {isHovered['subjectCode'] && <span className='text'>Ha a tárgykód tartalmazza a dátumot, akkor azt is megkell adni. PL: NKMKVI3244I/2023/24/1</span>}
         </span><br></br>
-      <button id="generateJSON" onClick={generateJSON}>Aláírás feltétel létrehozása</button>
+      <button id="generateJSON" onClick={generateJSON}>Megajánlott jegy feltétel létrehozása</button>
                   </div>
                 </div>
               </div>

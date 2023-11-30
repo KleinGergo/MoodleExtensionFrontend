@@ -57,7 +57,7 @@ const API = {
   
   getTestResultsForCourse: async (subjectIdentifier: string) => {
     try {
-      const response = await fetch(
+      let response = await fetch(
         `${API_BASE_URL}/MoodleApi/getTestResults?subjectIdentifier=${subjectIdentifier}`,
         {
           method: 'GET'
@@ -89,6 +89,11 @@ const API = {
         throw new Error('API request failed');
       } else {
         const data = await response.json();
+        if(data.value === "The subject does not exists!")
+        {
+          alert("Nem létezik kurzus a megadott tárgykóddal!");
+          throw new Error('API request failed');
+        }
         return data; // Return the data
       }
 

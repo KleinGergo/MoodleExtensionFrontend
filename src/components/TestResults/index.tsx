@@ -64,6 +64,7 @@ function Home({ email }: Props) {
   
       saveAs(new Blob([excelBuffer], { type: fileType }), filename + '.xlsx');
     } catch (error) {
+      alert("Nem található tárgy a megadott tárgykóddal!");
       console.error(error);
     }
   };
@@ -82,7 +83,7 @@ function Home({ email }: Props) {
         console.log(JSON.stringify(result));
         exportToXLSX(result,courseIdentifier);
 
-      } else {
+      } else{
         alert('Nem létezik tárgy, a megadott tárgykóddal!');
         // Handle the error or indicate that an error occurred
         console.error('API request failed');

@@ -20,6 +20,8 @@ interface ChartConfig {
   barColor: string;
 }
 
+
+
 export default class StatisticChart extends React.Component<{
   chartConfig: ChartConfig;
   reactData?: FrontendStatistics;

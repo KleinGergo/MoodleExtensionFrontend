@@ -13,18 +13,28 @@ function Statistic({ email }: { email: string })  {
 
 
   const getStatisticForSubject = async (courseIdentifier: string) => {
-    try {
-      const data = await API.getStatisticForCourse(courseIdentifier);
-      if (data) {
-        let parsedData: FrontendStatistics = JSON.parse(JSON.stringify(data));
-        
-        setChartData(parsedData);
-      } else {
-        console.error('Parsed data is undefined or falsy.');
+    if(courseIdentifier){
+      try {
+        const data = await API.getStatisticForCourse(courseIdentifier);
+        if (data) {
+          let parsedData: FrontendStatistics = JSON.parse(JSON.stringify(data));
+          if(parsedData){
+            setChartData(parsedData);
+          }else{
+            alert("asd");
+          }
+  
+        } else {
+          console.error('Parsed data is undefined or falsy.');
+        }
+      } catch (error) {
+        console.error('Error parsing or setting chart data:', error);
       }
-    } catch (error) {
-      console.error('Error parsing or setting chart data:', error);
+    }else
+    {
+      alert("Tárgykód megadása kötelező!");
     }
+    
   };
   
 
@@ -32,9 +42,7 @@ function Statistic({ email }: { email: string })  {
     
     <>
       <Navbar email={email || ''} />
-      
       <div className='cards'>
-        
         <div className='cards__container'>
         <h2 className='cards__email__text'>Adja meg a tárgykódot:</h2>
         <br />
@@ -43,7 +51,7 @@ function Statistic({ email }: { email: string })  {
         value={courseIdentifier}
         onChange={(e) => setCourseIdentifier(e.target.value)}
       />
-      <button onClick={() => getStatisticForSubject(courseIdentifier)}>Teszteredmények lekérése</button>
+      <button onClick={() => getStatisticForSubject(courseIdentifier)}>Statisztika lekérése</button>
           <div className='cards__wrapper'>
             <ul className='cards__item'>
               <Cards reactData={chartData}/>
